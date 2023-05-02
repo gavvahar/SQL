@@ -27,7 +27,7 @@ def create_heros():
 
 def select_heros():
     with Session(engine) as session:
-        statement = select(Hero).limit(3)
+        statement = select(Hero).offset(6).limit(3)
         results = session.exec(statement)
         hero = results.all()
         print("Hero:", hero)
