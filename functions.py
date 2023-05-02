@@ -27,7 +27,7 @@ def create_heros():
 
 def select_heros():
     with Session(engine) as session:
-        statement = select(Hero).where(col(Hero.age) >= 35)
+        statement = select(Hero).where(Hero.name == "Deadpond")
         results = session.exec(statement)
         for hero in results:
             print(hero)
