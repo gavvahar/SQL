@@ -1,6 +1,5 @@
-from typing import Optional
-
-from sqlmodel import Field, Session, SQLModel, create_engine, select
+from typing import *
+from sqlmodel import *
 
 
 class Hero(SQLModel, table=True):
@@ -10,18 +9,22 @@ class Hero(SQLModel, table=True):
     age: Optional[int] = None
 
 
-hero = [Hero(name="Deadpond", secret_name="Dive Wilson"),
+sqlite_file_name = "database.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+engine = create_engine(sqlite_url, echo=True)
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+def create_heros():
+    hero = [
+        Hero(name="Deadpond", secret_name="Dive Wilson"),
         Hero(name="Spider-Boy", secret_name="Pedro Parqueador"),
-        Hero(name="Rusty-Man", secret_name="Tommy Sharp", age=48)]
+        Hero(name="Rust-Man", secret_name="Tommy Sharp", age=48),
+    ]
 
-engine = create_engine("sqlite:///database.db")
 
-SQLModel.metadata.create_all(engine)
-
-with Session(engine) as session:
-    for x in hero:
-        session.add(x)
-    session.commit()
-    statement = select(Hero).where(Hero.name == "Spider-Boy")
-    hero = session.exec(statement).first()
-    print(hero)
+if __name__ == "__main__":
+    create_db_and_tables()
