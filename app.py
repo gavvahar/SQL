@@ -24,7 +24,17 @@ def create_heros():
         Hero(name="Spider-Boy", secret_name="Pedro Parqueador"),
         Hero(name="Rust-Man", secret_name="Tommy Sharp", age=48),
     ]
+    session = Session(engine)
+    for x in hero:
+        session.add(x)
+    session.commit()
+    session.close()
+
+
+def main():
+    create_db_and_tables()
+    create_heros()
 
 
 if __name__ == "__main__":
-    create_db_and_tables()
+    main()
