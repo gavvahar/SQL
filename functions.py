@@ -8,14 +8,18 @@ def create_db_and_tables():
 
 
 def create_heros():
-    hero = [
+    heroes = [
         Hero(name="Deadpond", secret_name="Dive Wilson"),
         Hero(name="Spider-Boy", secret_name="Pedro Parqueador"),
         Hero(name="Rust-Man", secret_name="Tommy Sharp", age=48),
+        Hero(name="Tarantula", secret_name="Natalia Roman-on", age=32),
+        Hero(name="Black Lion", secret_name="Trevor Challa", age=35),
+        Hero(name="Dr. Weird", secret_name="Steve Weird", age=36),
+        Hero(name="Captain North America", secret_name="Esteban Rogelios", age=93),
     ]
 
     with Session(engine) as session:
-        for x in hero:
+        for x in heroes:
             session.add(x)
 
         session.commit()
@@ -23,10 +27,10 @@ def create_heros():
 
 def select_heros():
     with Session(engine) as session:
-        statement = select(Hero)
+        statement = select(Hero).where(Hero.name != "Deadpond")
         results = session.exec(statement)
-        heroes = results.all()
-        print(heroes)
+        for hero in results:
+            print(hero)
 
 
 def main():
