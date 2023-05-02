@@ -27,9 +27,9 @@ def create_heros():
 
 def select_heros():
     with Session(engine) as session:
-        statement = select(Hero).where(Hero.name == "Deadpond")
+        statement = select(Hero).limit(3)
         results = session.exec(statement)
-        hero = results.one()
+        hero = results.all()
         print("Hero:", hero)
 
 
