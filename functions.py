@@ -30,13 +30,14 @@ def create_heroes():
 
         for x in heroes:
             session.add(x)
-
-        session.commit()
+            session.commit()
+            session.refresh(x)
+            print("Created hero:", x)
 
 
 def select_heroes():
     with Session(engine) as session:
-        statement = select(Hero, Team).where(Hero.team_id == Team.id)
+        statement = select(Hero, Team).join(Team)
         results = session.exec(statement)
         for hero, team in results:
             print("Hero:", hero, "Team:", team)
