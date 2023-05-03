@@ -41,24 +41,20 @@ def create_heroes():
 
 def update_heroes(name):
     with Session(engine) as session:
-        for x in range(1, 3):
-            statement = select(Hero).where(Hero.name == name)
-            results = session.exec(statement)
-            hero = results.one()
-            print(f"Hero {x}:", hero)
+        statement = select(Hero).where(Hero.name == name)
+        results = session.exec(statement)
+        hero = results.one()
 
-            if name == "Spider-Boy":
-                hero.age = 16
-                hero.name = "Spider_Youngster"
-            if name == "Captain North America":
-                hero.name = "Captain North America Except Canada"
-                hero.age = 110
-            session.add(hero)
+        if name == "Spider-Boy":
+            hero.age = 16
+            hero.name = "Spider_Youngster"
+        if name == "Captain North America":
+            hero.name = "Captain North America Except Canada"
+            hero.age = 110
+        session.add(hero)
 
-            session.commit()
-            session.refresh(hero)
-
-            print(f"Updated hero {x}:", hero)
+        session.commit()
+        session.refresh(hero)
 
 
 def main():
