@@ -35,15 +35,15 @@ def create_heroes():
             print("Created hero:", x)
 
 
-def select_heroes():
+def select_heroes(team_name):
     with Session(engine) as session:
-        statement = select(Hero, Team).join(Team, isouter=True)
+        statement = select(Hero, Team).join(Team).where(Team.name == team_name)
         results = session.exec(statement)
-        for hero, team in results:
-            print("Hero:", hero, "Team:", team)
+        for hero in results:
+            print(f"{team_name} Hero:", hero)
 
 
 def main():
     create_db_and_tables()
     create_heroes()
-    select_heroes()
+    select_heroes("Preventers")
