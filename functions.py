@@ -39,8 +39,8 @@ def select_heroes(team_name):
     with Session(engine) as session:
         statement = select(Hero, Team).join(Team).where(Team.name == team_name)
         results = session.exec(statement)
-        for hero in results:
-            print(f"{team_name} Hero:", hero)
+        for hero, team in results:
+            print(f"{team_name} Hero:", hero, "Team:", team)
 
 
 def main():
