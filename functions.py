@@ -8,17 +8,26 @@ def create_db_and_tables():
 
 
 def create_heroes():
-    heroes = [
-        Hero(name="Deadpond", secret_name="Dive Wilson"),
-        Hero(name="Spider-Boy", secret_name="Pedro Parqueador"),
-        Hero(name="Rust-Man", secret_name="Tommy Sharp", age=48),
-        Hero(name="Tarantula", secret_name="Natalia Roman-on", age=32),
-        Hero(name="Black Lion", secret_name="Trevor Challa", age=35),
-        Hero(name="Dr. Weird", secret_name="Steve Weird", age=36),
-        Hero(name="Captain North America", secret_name="Esteban Rogelios", age=93),
-    ]
-
     with Session(engine) as session:
+        teams = [
+            Team(name="Preventers", headquarters="Sharp Tower"),
+            Team(name="Z-Force", headquarters="Sister Margaret's Bar"),
+        ]
+        for t in teams:
+            session.add(t)
+        session.commit()
+        heroes = [
+            Hero(name="Deadpond", secret_name="Dive Wilson", team_id=teams[1].id),
+            Hero(name="Spider-Boy", secret_name="Pedro Parqueador"),
+            Hero(
+                name="Rust-Man", secret_name="Tommy Sharp", age=48, team_id=teams[0].id
+            ),
+            Hero(name="Tarantula", secret_name="Natalia Roman-on", age=32),
+            Hero(name="Black Lion", secret_name="Trevor Challa", age=35),
+            Hero(name="Dr. Weird", secret_name="Steve Weird", age=36),
+            Hero(name="Captain North America", secret_name="Esteban Rogelios", age=93),
+        ]
+
         for x in heroes:
             session.add(x)
 
@@ -66,6 +75,6 @@ def delete_heroes(name):
 def main():
     create_db_and_tables()
     create_heroes()
-    update_heroes("Spider-Boy")
-    update_heroes("Captain North America")
-    delete_heroes("Spider_Youngster")
+    # update_heroes("Spider-Boy")
+    # update_heroes("Captain North America")
+    # delete_heroes("Spider_Youngster")
