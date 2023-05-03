@@ -34,47 +34,15 @@ def create_heroes():
         session.commit()
 
 
-def update_heroes(name):
+def select_heroes():
     with Session(engine) as session:
-        statement = select(Hero).where(Hero.name == name)
+        statement = select(Hero, Team).where(Hero.team_id == Team.id)
         results = session.exec(statement)
-        hero = results.one()
-
-        if name == "Spider-Boy":
-            hero.age = 16
-            hero.name = "Spider_Youngster"
-        if name == "Captain North America":
-            hero.name = "Captain North America Except Canada"
-            hero.age = 110
-        session.add(hero)
-
-        session.commit()
-        session.refresh(hero)
-
-
-def delete_heroes(name):
-    with Session(engine) as session:
-        statement = select(Hero).where(Hero.name == name)
-        results = session.exec(statement)
-        hero = results.one()
-        print("Hero:", hero)
-
-        session.delete(hero)
-        session.commit()
-
-        print("Deleted hero:", hero)
-
-        statement = select(Hero).where(Hero.name == name)
-        results = session.exec(statement)
-        hero = results.first()
-
-        if hero is None:
-            print(f"There's no hero named {name}")
+        for hero, team in results:
+            print("Hero:", hero, "Team:", team)
 
 
 def main():
     create_db_and_tables()
     create_heroes()
-    # update_heroes("Spider-Boy")
-    # update_heroes("Captain North America")
-    # delete_heroes("Spider_Youngster")
+    select_heroes()
