@@ -33,6 +33,12 @@ def create_heroes():
             session.commit()
             session.refresh(x)
             print("Created hero:", x)
+            
+        heroes[1].team_id = teams[0].id
+        session.add(heroes[1])
+        session.commit()
+        session.refresh(heroes[1])
+        print("Updated hero:", heroes[1])
 
 
 def select_heroes(team_name):
