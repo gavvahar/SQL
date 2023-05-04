@@ -34,11 +34,28 @@ def create_heroes():
             session.refresh(x)
             print("Created hero:", x)
             
-        heroes[1].team_id = teams[0].id
-        session.add(heroes[1])
-        session.commit()
-        session.refresh(heroes[1])
-        print("Updated hero:", heroes[1])
+        
+        def add_team(hero_name, team_name):
+            statement = select(Hero.id, Team.id).where(Hero.name == hero_name).where(Team.name == team_name)
+            results = session.exec(statement)
+            for hero, team in results:
+                heroes[hero-1].team_id = team
+                session.add(heroes[hero-1])
+                session.commit()
+                session.refresh(heroes[hero-1])
+                print("Updated hero:", heroes[hero-1])
+        
+        add_team("Spider-Boy", "Preventers")
+        
+        def delete_team(hero_id):
+            old_team = heroes[hero_id].team_id-1
+            heroes[hero_id].team_id = None
+            session.add(heroes[hero_id])
+            session.commit()
+            session.refresh(heroes[hero_id])
+            print(f"No longer {teams[old_team].name}:", heroes[hero_id])
+        
+        delete_team(1)
 
 
 def select_heroes(team_name):
