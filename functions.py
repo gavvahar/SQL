@@ -1,5 +1,4 @@
 from add_and_remove import *
-from add_to_team import *
 
 
 def create_db_and_tables():
@@ -41,13 +40,6 @@ def create_heroes():
             session.commit()
             session.refresh(x1)
 
-        assign_team("Deadpond", "Z-Force")
-        assign_team("Rust-Man", "Preventers")
-
-        add_team("Spider-Boy", "Preventers")
-
-        delete_team("Spider-Boy")
-
 
 def select_heroes(team_name):
     with Session(engine) as session:
@@ -60,4 +52,11 @@ def select_heroes(team_name):
 def main():
     create_db_and_tables()
     create_heroes()
-    # select_heroes("Preventers")
+    assign_team("Deadpond", "Z-Force")
+    assign_team("Rust-Man", "Preventers")
+    assign_team("Spider-Boy", "Preventers")
+    assign_team("Tarantula", "Preventers")
+    assign_team("Dr. Weird", "Preventers")
+    assign_team("Captain North America", "Preventers")
+    select_heroes("Preventers")
+    delete_team("Spider-Boy")

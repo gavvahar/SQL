@@ -3,20 +3,20 @@ from classes import *
 from db import *
 
 
-def add_team(hero_name, team_name):
+def assign_team(hero_name, team_name):
     with Session(engine) as session:
         statement = (
-            select(Hero, Team.id)
-            .where(Hero.name == hero_name)
+            select(Hero, Team)
             .where(Team.name == team_name)
+            .where(Hero.name == hero_name)
         )
         results = session.exec(statement)
         for hero, team in results:
-            hero.team_id = team
-            session.add(hero)
+            team.add_heroes.append(hero)
+            session.add(team)
             session.commit()
             session.refresh(hero)
-            print("Updated hero:", hero)
+            print(f"{team.name} new hero:", hero)
 
 
 def delete_team(hero_name):
