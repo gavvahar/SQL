@@ -22,8 +22,8 @@ def create_heroes():
             session.add(x)
             session.commit()
             session.refresh(x)
-            print(f"{x}:", x)
-            print(f"{x} Teams:", x.team)
+            print(f"{x.name}:", x.name)
+            print(f"{x.name} Teams:", x.team)
 
         teams.append(
             Team(
@@ -55,5 +55,5 @@ def main():
     # assign_team("Tarantula", "Preventers")
     # assign_team("Dr. Weird", "Preventers")
     # assign_team("Captain North America", "Preventers")
-    select_heroes("Preventers")
+    # select_heroes("Preventers")
     delete_team("Spider-Boy")
