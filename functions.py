@@ -43,10 +43,10 @@ def create_heroes():
 
 def select_heroes(team_name):
     with Session(engine) as session:
-        statement = select(Hero, Team).join(Team).where(Team.name == team_name)
+        statement = select(Team).where(Team.name == team_name)
         results = session.exec(statement)
-        for hero, team1 in results:
-            print(f"{team_name} Hero:", hero, "Team:", team1)
+        for team in results:
+            print(f"{team_name} heroes:", team.add_heroes)
 
 
 def main():
