@@ -20,7 +20,7 @@ def create_heroes():
             Hero(name="Black Lion", secret_name="Trevor Challa", age=35),
             Hero(name="Dr. Weird", secret_name="Steve Weird", age=36),
             Hero(name="Captain North America", secret_name="Esteban Rogelios", age=93),
-            Hero(name="Princess Sure-E", secret_name="Sure-E")
+            Hero(name="Princess Sure-E", secret_name="Sure-E"),
         ]
 
         for x in heroes:
@@ -28,19 +28,25 @@ def create_heroes():
             session.commit()
             session.refresh(x)
             print("Created hero:", x)
-            
-        teams.append(Team(name="Wakaland", headquarters="Wakaland Capital City", add_heroes=[heroes[4], heroes[7]]))
+
+        teams.append(
+            Team(
+                name="Wakaland",
+                headquarters="Wakaland Capital City",
+                add_heroes=[heroes[4], heroes[7]],
+            )
+        )
         for x1 in teams:
             session.add(x1)
             session.commit()
             session.refresh(x1)
-            
+
         assign_team("Deadpond", "Z-Force")
         assign_team("Rust-Man", "Preventers")
-        
+
         add_team("Spider-Boy", "Preventers")
-                
-        
+
+        delete_team("Spider-Boy")
 
 
 def select_heroes(team_name):
