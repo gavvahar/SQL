@@ -23,7 +23,7 @@ def delete_team(hero_name):
         statement = select(Hero).where(Hero.name == hero_name)
         results = session.exec(statement)
         for hero in results:
-            hero.team_id = None
+            del hero.team
             session.add(hero)
             session.commit()
             session.refresh(hero)

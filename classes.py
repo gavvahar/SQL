@@ -26,7 +26,6 @@ class Hero(SQLModel, table=True):
     secret_name: str
     age: Optional[int] = Field(default=None, index=True)
 
-    team_id: Optional[int] = Field(default=None, foreign_key="team.id")
     team: Optional[Team] = Relationship(
         back_populates="add_heroes", link_model=HeroTeamLink
     )
