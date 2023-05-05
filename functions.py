@@ -1,4 +1,4 @@
-from add_and_remove import *
+from edit_team import *
 
 
 def create_heroes():
@@ -49,11 +49,9 @@ def select_heroes(team_name):
 def main():
     create_db_and_tables()
     create_heroes()
-    # assign_team("Deadpond", "Z-Force")
-    # assign_team("Rust-Man", "Preventers")
-    # assign_team("Spider-Boy", "Preventers")
-    # assign_team("Tarantula", "Preventers")
-    # assign_team("Dr. Weird", "Preventers")
-    # assign_team("Captain North America", "Preventers")
-    # select_heroes("Preventers")
+    assign_team("Tarantula", "Preventers")
+    assign_team("Dr. Weird", "Preventers")
+    assign_team("Captain North America", "Preventers")
+    select_heroes("Preventers")
     delete_team("Spider-Boy")
+    update_heroes("Spider-Boy", "Z-Force")
