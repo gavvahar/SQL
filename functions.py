@@ -1,10 +1,6 @@
 from add_and_remove import *
 
 
-def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)
-
-
 def create_heroes():
     with Session(engine) as session:
         teams = [
