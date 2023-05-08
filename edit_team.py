@@ -30,20 +30,22 @@ def delete_team(hero_name):
             print(f"{hero.name} without a team:", hero)
 
 
-def update_heroes(hero_name, team_name):
+def update_heroes(hero_name: str, team_name: str, traing=False, remove_team=""):
     with Session(engine) as session:
         hero = session.exec(select(Hero).where(Hero.name == hero_name)).one()
         team = session.exec(select(Team).where(Team.name == team_name)).one()
-        team.add_heroes.append(hero)
+
+        team_link = HeroTeamLink(team=team, hero=hero, is_training=traing)
+        team.hero_links.append(team_link)
         session.add(team)
         session.commit()
 
-        print(f"Updated {hero_name}'s Teams:", hero.team)
-        print(f"{team.name} heroes:", team.add_heroes)
+        print(f"Updated {hero.name}'s Teams:", hero.team_links)
+        print(f"{team.name} heroes:", team.hero_links)
 
-        hero.team.remove(team)
-        session.add(team)
-        session.commit()
-
-        print(f"Reverted {team_name}'s heroes:", team.add_heroes)
-        print(f"Reverted {hero_name}'s teams:", hero.team)
+        for link in hero.team_links:
+            if link.team.name == remove_team:
+                link.is_training = False
+            session.add(hero)
+            session.commit()
+            print(f"{hero_name} team: {link.team} is trinaing: {link.is_training}")
