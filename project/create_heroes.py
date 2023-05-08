@@ -1,4 +1,4 @@
-from edit_team import *
+from project.models import *
 
 
 def create_heroes():

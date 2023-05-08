@@ -1,4 +1,4 @@
-from imports import *
+from project.imports import *
 
 
 class HeroTeamLink(SQLModel, table=True):

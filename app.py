@@ -1,4 +1,4 @@
-from functions import *
+from project.create_heroes import *
 
 
 if __name__ == "__main__":

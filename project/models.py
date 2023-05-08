@@ -1,5 +1,5 @@
-from classes import *
-from db import *
+from project.classes import *
+from project.db import *
 
 
 def assign_team(hero_name, team_name):
